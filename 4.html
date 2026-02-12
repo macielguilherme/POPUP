@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Termos de Uso - SmartDocs</title>
+<style>
+    /* ===== RESET GLOBAL ===== */
+    html, body, div, span, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code,
+    del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center,
+    dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td {
+        margin: 0; padding: 0; border: 0; outline: 0; font-size: 100%; vertical-align: baseline;
+    }
+
+    body {
+        background: #fafafa;
+        font-size: 12px;
+        color: #595959;
+        font-family: Arial, Helvetica, sans-serif;
+        line-height: 20px;
+        position: relative;
+    }
+
+    /* ===== MODAL ===== */
+    #termo-backdrop {
+        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(0,0,0,0.5); display: flex; align-items: center;
+        justify-content: center; z-index: 9999;
+    }
+    .ui-dialog {
+        background: #585858; padding: 5px; border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.4);
+        width: 700px; max-width: 95%;
+    }
+    .ui-dialog .ui-dialog-titlebar {
+        position: relative;
+        background: url("https://docz.sosdocs.com.br/Docz/app/images/backgrounds/titleBg.png") repeat-x 0 0;
+        border-bottom: 1px solid #cdcdcd; height: 36px;
+        text-align: right; padding: 0 10px; display: block;
+    }
+    .ui-dialog-title { float: left; line-height: 36px; font-weight: bold; color: #595959; font-size: 12px; }
+    .ui-dialog-content { background-color: #fafafa; padding: 10px 12px; position: relative; display: block; }
+
+    /* ===== BOTÕES ===== */
+    .button, button, input[type=submit], input[type=reset], input[type=button] {
+        font-size: 10px;
+        font-weight: bold;
+        background-image: url("https://docz.sosdocs.com.br/Docz/app/images/ui/usualButtons.png");
+        background-repeat: repeat-x;
+        text-transform: uppercase;
+        cursor: pointer;
+        font-family: Arial, Helvetica, sans-serif;
+        line-height: 12px;
+        display: inline-block;
+        padding: 7px 18px 8px 18px;
+        border-radius: 2px;
+        margin-left: 5px;
+        text-decoration: none;
+        max-height: 29px;
+        color: #fff;
+    }
+    .blueB { background-position: 0 -85px; border: 1px solid #3672a0; }
+    .blueB:hover { background-position: 0 -120px; }
+    .greenB { background-position: 0 -425px; border: 1px solid #7ca82a; }
+    .greenB:hover { background-position: 0 -453px; }
+    .redB { background-position: 0 -170px; border: 1px solid #9f352b; }
+    .redB:hover { background-position: 0 -200px; }
+    button:disabled { opacity: 0.6; cursor: not-allowed; filter: grayscale(1); }
+
+    .textR { text-align: right; margin-top: 10px; }
+    .message-box { border-bottom: 1px double #ccc; margin-bottom: 15px; padding-bottom: 8px; }
+</style>
+</head>
+<body>
+
+<div id="termo-backdrop">
+    <!-- Modal principal -->
+    <div id="modal-principal" class="ui-dialog ui-widget">
+        <div class="ui-dialog-titlebar ui-widget-header">
+            <span class="ui-dialog-title">Termos de Uso e Condições</span>
+            <div style="line-height: 36px;">
+                <a href="javascript:void(0)" onclick="fluxoRecusa()" style="text-decoration:none; color:#595959;">✖</a>
+            </div>
+        </div>
+
+        <div class="ui-dialog-content ui-widget-content">
+            <div class="message-box">
+                <h6 style="font-weight: bold; color: #595959; font-size: 12px;">Importante:</h6>
+                <p>O acesso ao DocZ será liberado somente após a leitura completa e o aceite dos Termos de Uso.</p>
+            </div>
+
+            <!-- Botões lado a lado -->
+            <div class="formRow textR">
+                <button class="button blueB" onclick="abrirPDF()"><span>Abrir Termos</span></button>
+                <button id="btn-aceitar" class="button greenB" disabled onclick="finalizarAceite()"><span>Aceito os Termos</span></button>
+                <button class="button redB" onclick="fluxoRecusa()"><span>Não Aceito</span></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal recusa -->
+    <div id="tela-recusa" class="ui-dialog ui-widget" style="display: none; width: 400px;">
+        <div class="ui-dialog-titlebar ui-widget-header">
+            <span class="ui-dialog-title">Atenção</span>
+        </div>
+        <div class="ui-dialog-content ui-widget-content" style="text-align: center;">
+            <div style="margin: 20px 0;">
+                <p><strong>Acesso Bloqueado</strong></p>
+                <p>Você precisa ler e aceitar os termos para prosseguir no sistema.</p>
+            </div>
+            <div class="formRow" style="text-align: center;">
+                <button class="button blueB" onclick="voltarParaTermos()"><span>Voltar e Ler Termos</span></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Abre PDF real em nova aba
+    function abrirPDF() {
+        const pdfURL = 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf';
+        window.open(pdfURL, '_blank');
+
+        // Habilita o botão Aceito
+        document.getElementById('btn-aceitar').disabled = false;
+    }
+
+    function fluxoRecusa() {
+        document.getElementById('modal-principal').style.display = 'none';
+        document.getElementById('tela-recusa').style.display = 'block';
+    }
+
+    function voltarParaTermos() {
+        document.getElementById('tela-recusa').style.display = 'none';
+        document.getElementById('modal-principal').style.display = 'block';
+    }
+
+    function finalizarAceite() {
+        alert("Termos aceitos com sucesso!");
+        document.getElementById("termo-backdrop").style.display = "none";
+    }
+</script>
+
+</body>
+</html>
