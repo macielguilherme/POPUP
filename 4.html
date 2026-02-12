@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Termos de Uso - SmartDocs</title>
+    <title>Termos de Uso - DocZ</title>
 
     <style>
         /* ===== RESET GLOBAL ===== */
@@ -33,7 +33,7 @@
             max-width: 95%;
         }
 
-        .ui-dialog .ui-dialog-titlebar {
+        .ui-dialog-titlebar {
             background: url("https://docz.sosdocs.com.br/Docz/app/images/backgrounds/titleBg.png") repeat-x 0 0;
             border-bottom: 1px solid #cdcdcd;
             height: 36px;
@@ -91,15 +91,31 @@
             border: none;
         }
 
+        /* Cores dos Botões */
         .greenB { background-position: 0 -425px; border: 1px solid #7ca82a; }
         .redB { background-position: 0 -170px; border: 1px solid #9f352b; }
         .blueB { background-position: 0 -85px; border: 1px solid #3672a0; }
+        
+        /* Nova cor Vinho solicitada */
+        .btn-vinho { 
+            background-position: 0 -510px; 
+            border: 1px solid #63213b; 
+        }
 
         .close-x {
             text-decoration: none;
             color: #595959;
             font-weight: bold;
             font-size: 14px;
+        }
+
+        /* Ícone de Alerta SVG - Compacto */
+        .icon-alert {
+            width: 50px;
+            height: 50px;
+            fill: #9f352b;
+            margin-bottom: 5px; 
+            display: inline-block;
         }
     </style>
 </head>
@@ -132,12 +148,18 @@
         <div class="ui-dialog-titlebar">
             <span class="ui-dialog-title">Atenção</span>
         </div>
-        <div class="ui-dialog-content" style="text-align: center;">
-            <div style="margin: 20px 0;">
-                <p><strong>Acesso Bloqueado</strong></p>
-                <p>Você precisa aceitar os termos para prosseguir no sistema.</p>
+        <div class="ui-dialog-content" style="text-align: center; padding: 15px 20px 25px 20px;">
+            
+            <svg class="icon-alert" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2L1 21h22L12 2zm1 14h-2v-2h2v2zm0-4h-2V8h2v4z"/>
+            </svg>
+
+            <div style="margin-bottom: 20px;">
+                <p style="font-size: 16px; font-weight: bold; color: #595959; margin: 0 0 5px 0;">Acesso Bloqueado</p>
+                <p style="font-size: 12px; color: #666; margin: 0;">Você precisa aceitar os Termos de Uso para utilizar o DocZ.</p>
             </div>
-            <button class="button blueB" onclick="voltarParaTermos()">VOLTAR PARA O ACEITE</button>
+            
+            <button class="button btn-vinho" onclick="voltarParaLogin()">VOLTAR PARA LOGIN</button>
         </div>
     </div>
 
@@ -154,9 +176,8 @@
         document.getElementById('tela-recusa').style.display = 'block';
     }
 
-    function voltarParaTermos() {
-        document.getElementById('tela-recusa').style.display = 'none';
-        document.getElementById('modal-principal').style.display = 'block';
+    function voltarParaLogin() {
+        location.reload(); 
     }
 
     function finalizarAceite() {
