@@ -1,277 +1,169 @@
 <!DOCTYPE html>
-<html lang="pt-br"><plasmo-csui></plasmo-csui><head><style>body {transition: opacity ease-in 0.2s; } 
-body[unresolved] {opacity: 0; display: block; overflow: hidden; position: relative; } 
-</style>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Termos de Uso - SmartDocs</title>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Termos de Uso - SmartDocs</title>
 
-<style>
-/* ===== RESET GLOBAL ===== */
-html, body, div, span, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code,
-del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center,
-dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td {
-    margin: 0;
-    padding: 0;
-    border: 0;
-    outline: 0;
-    font-size: 100%;
-    vertical-align: baseline;
-}
+    <style>
+        /* ===== RESET GLOBAL ===== */
+        html, body {
+            margin: 0; padding: 0; border: 0;
+            background: #fafafa;
+            font-family: Arial, Helvetica, sans-serif;
+            color: #595959;
+            line-height: 20px;
+        }
 
-body {
-    background: #fafafa;
-    font-size: 12px;
-    color: #595959;
-    font-family: Arial, Helvetica, sans-serif;
-    line-height: 20px;
-    position: relative;
-}
+        /* ===== MODAL ===== */
+        #termo-backdrop {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: flex; align-items: center; justify-content: center;
+            z-index: 9999;
+        }
 
-/* ===== MODAL ===== */
-#termo-backdrop {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 9999;
-}
+        .ui-dialog {
+            background: #585858;
+            padding: 5px;
+            border-radius: 5px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.5);
+            width: 650px;
+            max-width: 95%;
+        }
 
-.ui-dialog {
-    background: #585858;
-    padding: 5px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.4);
-    width: 700px;
-    max-width: 95%;
-}
+        .ui-dialog .ui-dialog-titlebar {
+            background: url("https://docz.sosdocs.com.br/Docz/app/images/backgrounds/titleBg.png") repeat-x 0 0;
+            border-bottom: 1px solid #cdcdcd;
+            height: 36px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 10px;
+        }
 
-.ui-dialog .ui-dialog-titlebar {
-    position: relative;
-    background: url("https://docz.sosdocs.com.br/Docz/app/images/backgrounds/titleBg.png") repeat-x 0 0;
-    border-bottom: 1px solid #cdcdcd;
-    height: 36px;
-    text-align: right;
-    padding: 0 10px;
-}
+        .ui-dialog-title {
+            font-weight: bold;
+            color: #595959;
+            font-size: 12px;
+        }
 
-.ui-dialog-title {
-    float: left;
-    line-height: 36px;
-    font-weight: bold;
-    color: #595959;
-    font-size: 12px;
-}
+        .ui-dialog-content {
+            background-color: #fafafa;
+            padding: 20px;
+        }
 
-.ui-dialog-content {
-    background-color: #fafafa;
-    padding: 10px 12px;
-}
+        /* ===== ELEMENTOS INTERNOS ===== */
+        .message-box {
+            margin-bottom: 20px;
+            font-size: 12px;
+            color: #595959;
+            text-align: left;
+        }
 
-/* ===== BOTÕES (SEM HOVER) ===== */
-.button,
-button,
-input[type=submit],
-input[type=reset],
-input[type=button] {
-    font-size: 10px;
-    font-weight: bold;
-    background-image: url("https://docz.sosdocs.com.br/Docz/app/images/ui/usualButtons.png");
-    background-repeat: repeat-x;
-    text-transform: uppercase;
-    cursor: pointer;
-    font-family: Arial, Helvetica, sans-serif;
-    line-height: 12px;
-    display: inline-block;
-    padding: 7px 18px 8px 18px;
-    border-radius: 2px;
-    margin-left: 5px;
-    text-decoration: none;
-    max-height: 29px;
-    color: #fff;
-}
+        .link-termos {
+            color: #3672a0;
+            text-decoration: underline;
+            cursor: pointer;
+            font-weight: bold;
+        }
 
-/* Azul */
-.blueB {
-    background-position: 0 -85px;
-    border: 1px solid #3672a0;
-}
+        /* ===== BOTÕES ===== */
+        .button-wrapper {
+            text-align: right;
+            border-top: 1px double #ccc;
+            padding-top: 15px;
+        }
 
-/* Verde */
-.greenB {
-    background-position: 0 -425px;
-    border: 1px solid #7ca82a;
-}
+        .button {
+            font-size: 10px;
+            font-weight: bold;
+            background-image: url("https://docz.sosdocs.com.br/Docz/app/images/ui/usualButtons.png");
+            background-repeat: repeat-x;
+            text-transform: uppercase;
+            cursor: pointer;
+            padding: 7px 18px 8px 18px;
+            border-radius: 2px;
+            margin-left: 5px;
+            color: #fff;
+            display: inline-block;
+            border: none;
+        }
 
-/* Vermelho */
-.redB {
-    background-position: 0 -170px;
-    border: 1px solid #9f352b;
-}
+        .greenB { background-position: 0 -425px; border: 1px solid #7ca82a; }
+        .redB { background-position: 0 -170px; border: 1px solid #9f352b; }
+        .blueB { background-position: 0 -85px; border: 1px solid #3672a0; }
 
-/* Desabilitado */
-button:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-    filter: grayscale(1);
-}
-
-.textR {
-    text-align: right;
-    margin-top: 10px;
-}
-
-.message-box {
-    border-bottom: 1px double #ccc;
-    margin-bottom: 15px;
-    padding-bottom: 8px;
-}
-</style>
-<style id="fusion-selection-styles">
-  .fusion-element-highlight {
-    outline: 2px solid rgb(26, 115, 235) !important;
-    outline-style: solid !important;
-  }
-
-  .fusion-element-selected {
-    outline: 4px solid rgb(26, 115, 235) !important;
-    outline-style: solid !important;
-    outline-offset: 0px !important;
-  }
-  
-  .fusion-selection-overlay {
-    position: fixed !important;
-    top: 0 !important;
-    left: 0 !important;
-    right: 0 !important;
-    bottom: 0 !important;
-    background: rgba(0, 0, 0, 0.05) !important;
-    z-index: 2147483647 !important;
-    cursor: crosshair !important;
-    pointer-events: none !important;
-  }
-  
-  .fusion-selection-tooltip {
-    position: fixed !important;
-    background: #1f2937 !important;
-    color: white !important;
-    padding: 8px 12px !important;
-    border-radius: 6px !important;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
-    font-size: 13px !important;
-    font-weight: 500 !important;
-    z-index: 2147483648 !important;
-    pointer-events: none !important;
-    transform: translate(-50%, -100%) translateY(-10px) !important;
-    white-space: nowrap !important;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
-  }
-  
-  .fusion-selection-tooltip::after {
-    content: '' !important;
-    position: absolute !important;
-    top: 100% !important;
-    left: 50% !important;
-    transform: translateX(-50%) !important;
-    border: 5px solid transparent !important;
-    border-top-color: #1f2937 !important;
-  }
-  
-  
-  @keyframes fusion-fade-in {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
-  
-  @keyframes fusion-label-bounce {
-    0% { 
-      opacity: 0;
-      transform: translateY(-10px) scale(0.9);
-    }
-    50% {
-      opacity: 1;
-      transform: translateY(0) scale(1.05);
-    }
-    100% { 
-      opacity: 1;
-      transform: translateY(0) scale(1);
-    }
-  }
-</style></head>
+        .close-x {
+            text-decoration: none;
+            color: #595959;
+            font-weight: bold;
+            font-size: 14px;
+        }
+    </style>
+</head>
 
 <body>
 
 <div id="termo-backdrop">
 
-    <!-- Modal principal -->
-    <div id="modal-principal" class="ui-dialog ui-widget" style="display: block;">
-        <div class="ui-dialog-titlebar ui-widget-header">
-            <span class="ui-dialog-title">Termos de Uso e Condições</span>
-            <div style="line-height: 36px;">
-                <a href="javascript:void(0)" onclick="fluxoRecusa()" style="text-decoration:none; color:#595959;">✖</a>
-            </div>
+    <div id="modal-principal" class="ui-dialog">
+        <div class="ui-dialog-titlebar">
+            <span class="ui-dialog-title">Termos de Uso e Política de Privacidade</span>
+            <a href="javascript:void(0)" onclick="fluxoRecusa()" class="close-x">✖</a>
         </div>
 
-        <div class="ui-dialog-content ui-widget-content" style="display: flex; flex-direction: column; justify-content: space-between; min-height: 113px; height: 153px;">
+        <div class="ui-dialog-content">
             <div class="message-box">
-                <h6 style="font-weight: bold; color: #595959; font-size: 12px;">Importante:</h6>
-                <p>O acesso ao DocZ será liberado somente após a leitura completa e o aceite dos Termos de Uso.</p>
+                <p>Para continuar utilizando o <strong>DocZ</strong>, é necessário ler e aceitar os Termos de Uso e Política de Privacidade atualizados.</p>
+                <br>
+                <p>Você pode ler os <span class="link-termos" onclick="abrirPDF()">Termos de Uso e Política de Privacidade</span> aqui.</p>
             </div>
 
-            <div class="formRow textR">
-                <button class="button blueB" onclick="abrirPDF()">Abrir Termos</button>
-                <button id="btn-aceitar" class="button greenB" disabled="" onclick="finalizarAceite()">Aceito os Termos</button>
-                <button class="button redB" onclick="fluxoRecusa()">Não Aceito</button>
+            <div class="button-wrapper">
+                <button class="button redB" onclick="fluxoRecusa()">NÃO ACEITO</button>
+                <button id="btn-aceitar" class="button greenB" onclick="finalizarAceite()">LI E ACEITO OS TERMOS</button>
             </div>
         </div>
     </div>
 
-    <!-- Modal recusa -->
-    <div id="tela-recusa" class="ui-dialog ui-widget" style="display: none; width: 400px;">
-        <div class="ui-dialog-titlebar ui-widget-header">
+    <div id="tela-recusa" class="ui-dialog" style="display: none; width: 400px;">
+        <div class="ui-dialog-titlebar">
             <span class="ui-dialog-title">Atenção</span>
         </div>
-        <div class="ui-dialog-content ui-widget-content" style="text-align: center; display: flex; flex-direction: column; justify-content: space-between; min-height: 0px; height: 110px;">
+        <div class="ui-dialog-content" style="text-align: center;">
             <div style="margin: 20px 0;">
                 <p><strong>Acesso Bloqueado</strong></p>
-                <p>Você precisa ler e aceitar os termos para prosseguir no sistema.</p>
+                <p>Você precisa aceitar os termos para prosseguir no sistema.</p>
             </div>
-            <div class="formRow" style="text-align: center;">
-                <button class="button blueB" onclick="voltarParaTermos()">Voltar e Ler Termos</button>
-            </div>
+            <button class="button blueB" onclick="voltarParaTermos()">VOLTAR PARA O ACEITE</button>
         </div>
     </div>
 
 </div>
 
 <script>
-function abrirPDF() {
-    const pdfURL = 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf';
-    window.open(pdfURL, '_blank');
-    document.getElementById('btn-aceitar').disabled = false;
-}
+    function abrirPDF() {
+        const pdfURL = 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf';
+        window.open(pdfURL, '_blank');
+    }
 
-function fluxoRecusa() {
-    document.getElementById('modal-principal').style.display = 'none';
-    document.getElementById('tela-recusa').style.display = 'block';
-}
+    function fluxoRecusa() {
+        document.getElementById('modal-principal').style.display = 'none';
+        document.getElementById('tela-recusa').style.display = 'block';
+    }
 
-function voltarParaTermos() {
-    document.getElementById('tela-recusa').style.display = 'none';
-    document.getElementById('modal-principal').style.display = 'block';
-}
+    function voltarParaTermos() {
+        document.getElementById('tela-recusa').style.display = 'none';
+        document.getElementById('modal-principal').style.display = 'block';
+    }
 
-function finalizarAceite() {
-    alert("Termos aceitos com sucesso!");
-    document.getElementById("termo-backdrop").style.display = "none";
-}
+    function finalizarAceite() {
+        alert("Termos aceitos com sucesso!");
+        document.getElementById("termo-backdrop").style.display = "none";
+    }
 </script>
 
-
-
-<veepn-lock-screen><style>@font-face{font-family:FigtreeVF;src:url(chrome-extension://majdfhpaihoncoakbjgbdhglocklcgno/fonts/FigtreeVF.woff2) format("woff2 supports variations"),url(chrome-extension://majdfhpaihoncoakbjgbdhglocklcgno/fonts/FigtreeVF.woff2) format("woff2-variations");font-weight:100 1000;font-display:swap}</style></veepn-lock-screen></body></html>
+</body>
+</html>
