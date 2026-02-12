@@ -5,72 +5,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Termos de Uso - SmartDocs</title>
     <style>
-        /* ===== 1. RESET GLOBAL & BASE ===== */
-        html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, 
-        blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, 
-        font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, 
-        var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, 
-        legend, table, caption, tbody, tfoot, thead, tr, th, td {
-            margin: 0;
-            padding: 0;
-            border: 0;
-            outline: 0;
-            font-size: 100%;
-            vertical-align: baseline;
+        /* ===== 1. RESET GLOBAL & BASE (Conforme Referência) ===== */
+        html, body, div, span, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td {
+            margin: 0; padding: 0; border: 0; outline: 0; font-size: 100%; vertical-align: baseline;
         }
-
-        *, * focus {
-            outline: none;
-            margin: 0;
-            padding: 0;
-        }
-
         body {
-            min-height: 100%;
+            background: #fafafa;
             font-size: 12px;
             color: #595959;
             font-family: Arial, Helvetica, sans-serif;
             line-height: 20px;
-            position: relative;
-            background: #fafafa;
         }
 
-        /* ===== 2. ESTRUTURA DO BACKDROP E MODAL (ui-dialog) ===== */
+        /* ===== 2. ESTRUTURA DA MODAL (ui-dialog) ===== */
         #termo-backdrop {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
-            display: flex;
-            align-items: center; 
-            justify-content: center;
-            z-index: 9999;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5); display: flex; align-items: center; 
+            justify-content: center; z-index: 9999;
         }
 
         .ui-dialog {
             background: #585858;
             padding: 5px;
-            -moz-border-radius: 5px;
-            -webkit-border-radius: 5px;
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0,0,0,0.4);
-            width: 700px;
+            width: 700px; /* Ajustado para leitura de documento */
             max-width: 95%;
-            box-sizing: border-box;
         }
 
         .ui-dialog .ui-dialog-titlebar {
             position: relative;
             background: url("https://docz.sosdocs.com.br/Docz/app/images/backgrounds/titleBg.png") repeat-x 0 0;
             border-bottom: 1px solid #cdcdcd;
-            border-radius: 0 !important;
             height: 36px;
             text-align: right;
             padding: 0 10px;
             display: block;
-            box-sizing: border-box;
         }
 
         .ui-dialog-title {
@@ -83,20 +53,12 @@
 
         .ui-dialog-content {
             background-color: #fafafa;
-            padding: 15px 20px;
+            padding: 10px 12px;
             position: relative;
             display: block;
-            box-sizing: border-box;
         }
 
-        /* ===== 3. COMPONENTES INTERNOS (PDF E MENSAGENS) ===== */
-        .message {
-            font-size: 13px;
-            margin-bottom: 15px;
-            color: #595959;
-            line-height: 1.4;
-        }
-
+        /* ===== 3. COMPONENTES ESPECÍFICOS DO PDF ===== */
         .pdf-container {
             width: 100%;
             height: 350px;
@@ -110,77 +72,48 @@
 
         .pdf-page {
             background: white;
-            width: 90%;
+            width: 85%;
             margin: 0 auto 10px auto;
-            min-height: 500px;
             padding: 30px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-            box-sizing: border-box;
             font-size: 11px;
             color: #333;
             line-height: 1.5;
         }
 
-        .pdf-header {
-            border-bottom: 1px solid #eee;
-            margin-bottom: 15px;
-            padding-bottom: 5px;
-            display: flex;
-            justify-content: space-between;
-            font-weight: bold;
-            color: #3672a0;
-        }
-
-        #tela-recusa { display: none; text-align: center; }
-        
-        .alert-box {
-            padding: 20px;
-            text-align: center;
-        }
-
-        /* ===== 4. BOTÕES (usualButtons.png) ===== */
+        /* ===== 4. BOTÕES (Padrão UsualButtons) ===== */
         .button, button {
             font-size: 10px;
             font-weight: bold;
             background-image: url("https://docz.sosdocs.com.br/Docz/app/images/ui/usualButtons.png");
             background-repeat: repeat-x;
             text-transform: uppercase;
-            white-space: nowrap;
             cursor: pointer;
             font-family: Arial, Helvetica, sans-serif;
-            line-height: 12px;
-            display: inline-block;
-            max-height: 29px;
             padding: 7px 15px;
             border-radius: 2px;
             text-decoration: none;
+            display: inline-block;
             margin-left: 5px;
-            border: 1px solid #d5d5d5;
         }
 
+        .blueB { background-position: 0 -85px; border: 1px solid #3672a0; color: #fff !important; }
+        .greenB { background-position: 0 -425px; border: 1px solid #7ca82a; color: #fff !important; }
+        
         button:disabled {
-            opacity: 0.5;
+            opacity: 0.6;
             cursor: not-allowed;
+            filter: grayscale(1);
         }
 
-        .blueB {
-            background-position: 0 -85px;
-            border: 1px solid #3672a0;
-            color: #fff !important;
+        .textR { text-align: right; margin-top: 10px; }
+        .message-box { 
+            border-bottom: 1px double #ccc; 
+            margin-bottom: 15px; 
+            padding-bottom: 8px; 
         }
 
-        .greenB {
-            background-position: 0 -425px;
-            border: 1px solid #7ca82a;
-            color: #fff !important;
-        }
-
-        .formRow {
-            margin-top: 10px;
-            text-align: right;
-        }
-
-        /* Custom Scrollbar para o PDF */
+        /* Scrollbar */
         .pdf-container::-webkit-scrollbar { width: 8px; }
         .pdf-container::-webkit-scrollbar-track { background: #525659; }
         .pdf-container::-webkit-scrollbar-thumb { background: #888; border-radius: 4px; }
@@ -189,69 +122,68 @@
 <body>
 
 <div id="termo-backdrop">
-    <div id="modal-principal" class="ui-dialog">
-        <div class="ui-dialog-titlebar">
-            <span class="ui-dialog-title">Termos de Uso - SmartDocs</span>
+    <div id="modal-principal" class="ui-dialog ui-widget">
+        <div class="ui-dialog-titlebar ui-widget-header">
+            <span class="ui-dialog-title">Termos de Uso e Condições</span>
             <div style="line-height: 36px;">
-                <a href="javascript:void(0)" onclick="fluxoRecusa()" style="text-decoration:none; color:#595959; font-weight: bold;">✖</a>
+                <a href="javascript:void(0)" onclick="fluxoRecusa()" style="text-decoration:none; color:#595959;">✖</a>
             </div>
         </div>
 
-        <div class="ui-dialog-content">
-            <div style="border-bottom: 1px double #ccc; margin-bottom: 10px; padding-bottom: 5px;">
-                <h6 style="font-weight: bold; color: #595959;">Contrato de Licença de Uso</h6>
+        <div class="ui-dialog-content ui-widget-content">
+            <div class="message-box">
+                <h6 style="font-weight: bold; color: #595959; font-size: 12px;">Importante:</h6>
+                <p>O acesso ao DocZ será liberado somente após a leitura completa e o aceite dos Termos de Uso abaixo.</p>
             </div>
-            
-            <p class="message">O acesso ao DocZ será liberado somente após a leitura completa e o aceite dos termos abaixo.</p>
 
             <div class="pdf-container" id="pdf-scroll" onscroll="verificarLeitura()">
                 <div class="pdf-page">
-                    <div class="pdf-header">
+                    <div style="border-bottom: 1px solid #eee; margin-bottom: 15px; display: flex; justify-content: space-between; font-weight: bold; color: #3672a0;">
                         <span>SmartDocs v.2024.1</span>
-                        <span style="color: #999">Página 1 de 1</span>
+                        <span style="color: #999">Pág. 1/1</span>
                     </div>
                     
-                    <h2 style="font-size: 14px; text-align: center; margin-bottom: 20px; text-transform: uppercase;">Contrato de Prestação de Serviços Digitais</h2>
+                    <h2 style="font-size: 13px; text-align: center; margin-bottom: 15px; font-weight: bold;">CONTRATO DE PRESTAÇÃO DE SERVIÇOS DIGITAIS</h2>
                     
-                    <p><strong>1. OBJETO</strong><br>
+                    <p style="margin-bottom: 10px;"><strong>1. OBJETO</strong><br>
                     Este documento define as regras de utilização da plataforma SmartDocs, focada em gestão documental inteligente e automação de processos.</p>
-                    <br>
-                    <p><strong>2. LICENÇA DE USO</strong><br>
-                    O SmartDocs concede ao usuário uma licença limitada, não exclusiva e intransferível para acessar as funcionalidades contratadas, sendo vedada a engenharia reversa ou reprodução do código-fonte.</p>
-                    <br>
-                    <p><strong>3. POLÍTICA DE DADOS</strong><br>
-                    Em conformidade com a LGPD, os dados inseridos são criptografados e utilizados apenas para a finalidade do serviço. O usuário retém a propriedade total de seus documentos.</p>
-                    <br>
-                    <p><strong>4. DISPONIBILIDADE</strong><br>
-                    A plataforma busca manter 99.9% de uptime, exceto em janelas de manutenção previamente comunicadas.</p>
-                    <br>
-                    <p><strong>5. RESCISÃO</strong><br>
-                    O descumprimento de qualquer cláusula aqui presente resultará na suspensão imediata da conta sem aviso prévio.</p>
                     
-                    <p style="margin-top: 80px; border-top: 1px solid #eee; padding-top: 20px; text-align: center; color: #999;">
+                    <p style="margin-bottom: 10px;"><strong>2. LICENÇA DE USO</strong><br>
+                    O SmartDocs concede ao usuário uma licença limitada, não exclusiva e intransferível para acessar as funcionalidades contratadas.</p>
+                    
+                    <p style="margin-bottom: 10px;"><strong>3. POLÍTICA DE DADOS</strong><br>
+                    Em conformidade com a LGPD, os dados inseridos são criptografados e utilizados apenas para a finalidade do serviço.</p>
+                    
+                    <p style="margin-bottom: 10px;"><strong>4. DISPONIBILIDADE</strong><br>
+                    A plataforma busca manter 99.9% de uptime, exceto em janelas de manutenção.</p>
+                    
+                    <p style="margin-bottom: 10px;"><strong>5. RESCISÃO</strong><br>
+                    O descumprimento de qualquer cláusula resultará na suspensão imediata da conta.</p>
+                    
+                    <p style="margin-top: 40px; border-top: 1px solid #eee; padding-top: 10px; text-align: center; color: #999; font-style: italic;">
                         Documento assinado digitalmente pela infraestrutura SmartDocs.
                     </p>
                 </div>
             </div>
 
-            <div class="formRow">
-                <button class="button" onclick="fluxoRecusa()">Não Aceito</button>
-                <button id="btn-aceitar" class="button blueB" disabled onclick="finalizarAceite()">Aceito os Termos</button>
+            <div class="formRow textR">
+                <button class="button greenB" onclick="fluxoRecusa()"><span>Não Aceito</span></button>
+                <button id="btn-aceitar" class="button blueB" disabled onclick="finalizarAceite()"><span>Aceito os Termos</span></button>
             </div>
         </div>
     </div>
 
-    <div id="tela-recusa" class="ui-dialog">
-        <div class="ui-dialog-titlebar">
-            <span class="ui-dialog-title">Aviso de Sistema</span>
+    <div id="tela-recusa" class="ui-dialog ui-widget" style="display: none; width: 400px;">
+        <div class="ui-dialog-titlebar ui-widget-header">
+            <span class="ui-dialog-title">Atenção</span>
         </div>
-        <div class="ui-dialog-content alert-box">
-            <div style="margin-bottom: 15px;">
-                <strong style="color: #cf4436; font-size: 14px;">ACESSO BLOQUEADO</strong>
+        <div class="ui-dialog-content ui-widget-content" style="text-align: center;">
+            <div style="margin: 20px 0;">
+                <p><strong>Acesso Bloqueado</strong></p>
+                <p>Você precisa ler e aceitar os termos para prosseguir no sistema.</p>
             </div>
-            <p class="message">Você precisa ler todo o documento e aceitar os termos para prosseguir para o sistema.</p>
             <div class="formRow" style="text-align: center;">
-                <button class="button greenB" onclick="voltarParaTermos()">Voltar para Leitura</button>
+                <button class="button blueB" onclick="voltarParaTermos()"><span>Voltar e Ler Termos</span></button>
             </div>
         </div>
     </div>
@@ -262,11 +194,11 @@
         const container = document.getElementById('pdf-scroll');
         const btn = document.getElementById('btn-aceitar');
         
-        // Se o scroll chegar a 95% do fim, libera o botão
+        // Se o scroll chegar próximo ao fim, libera o botão
         const totalScroll = container.scrollHeight - container.clientHeight;
         const progresso = container.scrollTop;
 
-        if (progresso >= totalScroll - 20) {
+        if (progresso >= totalScroll - 30) {
             btn.disabled = false;
         }
     }
