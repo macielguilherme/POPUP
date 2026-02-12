@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Protótipo Termos de Uso - SmartDocs</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        :root {
+            --primary-blue: rgb(47, 22, 201);
+            --text-main: rgba(0, 0, 0, 0.87);
+            --text-secondary: rgba(0, 0, 0, 0.6);
+            --disabled: rgba(0, 0, 0, 0.12);
+            --disabled-text: rgba(0, 0, 0, 0.26);
+            --shadow: rgba(0, 0, 0, 0.2) 0px 11px 15px -7px, rgba(0, 0, 0, 0.14) 0px 24px 38px 3px, rgba(0, 0, 0, 0.12) 0px 9px 46px 8px;
+            --pdf-bg: #525659;
+        }
+
+        body { margin: 0; font-family: 'Roboto', sans-serif; background: #fafafa; }
+
+        #termo-backdrop {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5); display: flex; align-items: center; 
+            justify-content: center; z-index: 9999;
+        }
+
+        .modal {
+            background: #fff; width: 600px; max-width: 95%; border-radius: 8px;
+            box-shadow: var(--shadow); padding: 32px; position: relative; box-sizing: border-box;
+        }
+
+        .btn-close {
+            position: absolute; top: 16px; right: 16px; background: none; 
+            border: none; cursor: pointer; color: var(--text-secondary);
+        }
+
+        h6 { margin: 0 0 12px 0; font-size: 20px; font-weight: 500; color: var(--text-main); }
+        .message { font-size: 15px; color: var(--text-secondary); line-height: 1.5; margin-bottom: 20px; }
+
+        /* ESTILIZAÇÃO DO PDF */
+        .pdf-container {
+            width: 100%;
+            height: 300px;
+            background: var(--pdf-bg); /* Fundo escuro igual leitor de PDF */
+            border-radius: 4px;
+            overflow-y: auto;
+            margin-bottom: 24px;
+            padding: 20px 0;
+            box-sizing: border-box;
+        }
+
+        .pdf-page {
+            background: white;
+            width: 85%;
+            margin: 0 auto 20px auto;
+            min-height: 400px;
+            padding: 40px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            box-sizing: border-box;
+            font-size: 12px;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .pdf-header {
+            border-bottom: 1px solid #eee;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* AÇÕES */
+        .actions { display: flex; gap: 16px; justify-content: flex-end; }
+
+        .btn {
+            padding: 10px 24px; border-radius: 4px; font-size: 14px; font-weight: 500;
+            cursor: pointer; text-transform: uppercase; letter-spacing: 0.4px; transition: all 0.2s;
+        }
+
+        .btn-outlined { background: transparent; color: var(--primary-blue); border: 1px solid rgba(47, 22, 201, 0.5); }
+        .btn-contained { background: var(--primary-blue); color: #fff; border: none; box-shadow: 0px 3px 1px -2px rgba(0,0,0,0.2); }
+
+        .btn-contained:disabled {
+            background-color: var(--disabled) !important;
+            color: var(--disabled-text) !important;
+            box-shadow: none; cursor: not-allowed;
+        }
+
+        #tela-recusa { display: none; text-align: center; }
+        .alert-icon { color: #ef6c00; font-size: 48px; margin-bottom: 16px; }
+
+        /* Barra de rolagem estilizada */
+        .pdf-container::-webkit-scrollbar { width: 8px; }
+        .pdf-container::-webkit-scrollbar-track { background: var(--pdf-bg); }
+        .pdf-container::-webkit-scrollbar-thumb { background: #888; border-radius: 4px; }
+    </style>
+</head>
+<body>
+
+<div id="termo-backdrop">
+    <div id="modal-principal" class="modal">
+        <button class="btn-close" onclick="fluxoRecusa()"><span class="material-icons">close</span></button>
+        <h6>Termos de Uso</h6>
+        <p class="message">Role o documento até o final para habilitar o aceite.</p>
+        
+        <div class="pdf-container" id="pdf-scroll" onscroll="verificarLeitura()">
+            <div class="pdf-page">
+                <div class="pdf-header">
+                    <span style="font-weight: bold; color: var(--primary-blue)">SmartDocs v.2024.1</span>
+                    <span style="color: #999">Página 1 de 1</span>
+                </div>
+                
+                <h2 style="font-size: 16px; text-align: center;">CONTRATO DE PRESTAÇÃO DE SERVIÇOS DIGITAIS</h2>
+                
+                <p><strong>1. OBJETO</strong><br>
+                Este documento define as regras de utilização da plataforma SmartDocs, focada em gestão documental inteligente e automação de processos.</p>
+                
+                <p><strong>2. LICENÇA DE USO</strong><br>
+                O SmartDocs concede ao usuário uma licença limitada, não exclusiva e intransferível para acessar as funcionalidades contratadas, sendo vedada a engenharia reversa ou reprodução do código-fonte.</p>
+                
+                <p><strong>3. POLÍTICA DE DADOS</strong><br>
+                Em conformidade com a LGPD, os dados inseridos são criptografados e utilizados apenas para a finalidade do serviço. O usuário retém a propriedade total de seus documentos.</p>
+                
+                <p><strong>4. DISPONIBILIDADE</strong><br>
+                A plataforma busca manter 99.9% de uptime, exceto em janelas de manutenção previamente comunicadas.</p>
+                
+                <p><strong>5. RESCISÃO</strong><br>
+                O descumprimento de qualquer cláusula aqui presente resultará na suspensão imediata da conta sem aviso prévio.</p>
+                
+                <p style="margin-top: 50px; border-top: 1px solid #eee; padding-top: 20px; text-align: center; color: #999;">
+                    Documento assinado digitalmente pela infraestrutura SmartDocs.
+                </p>
+            </div>
+        </div>
+
+        <div class="actions">
+            <button class="btn btn-outlined" onclick="fluxoRecusa()">Não Aceito</button>
+            <button id="btn-aceitar" class="btn btn-contained" disabled onclick="finalizarAceite()">Aceito os Termos</button>
+        </div>
+    </div>
+
+    <div id="tela-recusa" class="modal">
+        <span class="material-icons alert-icon">warning</span>
+        <h6>Acesso Bloqueado</h6>
+        <p class="message">Você precisa ler e aceitar os termos para prosseguir.</p>
+        <div style="display: flex; justify-content: center;">
+            <button class="btn btn-contained" onclick="voltarParaTermos()">Voltar e Ler</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    function verificarLeitura() {
+        const container = document.getElementById('pdf-scroll');
+        const btn = document.getElementById('btn-aceitar');
+        
+        // Se o scroll chegar a 95% do fim, libera o botão
+        const totalScroll = container.scrollHeight - container.clientHeight;
+        const progresso = container.scrollTop;
+
+        if (progresso >= totalScroll - 20) {
+            btn.disabled = false;
+        }
+    }
+
+    function fluxoRecusa() {
+        document.getElementById('modal-principal').style.display = 'none';
+        document.getElementById('tela-recusa').style.display = 'block';
+    }
+
+    function voltarParaTermos() {
+        document.getElementById('tela-recusa').style.display = 'none';
+        document.getElementById('modal-principal').style.display = 'block';
+    }
+
+    function finalizarAceite() {
+        alert("Termos aceitos com sucesso!");
+        document.getElementById("termo-backdrop").style.display = "none";
+    }
+</script>
+
+</body>
+</html>
