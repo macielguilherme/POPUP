@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html lang="pt-br">
-<head>
+<html lang="pt-br"><plasmo-csui></plasmo-csui><head><style>body {transition: opacity ease-in 0.2s; } 
+body[unresolved] {opacity: 0; display: block; overflow: hidden; position: relative; } 
+</style>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Termos de Uso - SmartDocs</title>
@@ -131,14 +132,84 @@ button:disabled {
     padding-bottom: 8px;
 }
 </style>
-</head>
+<style id="fusion-selection-styles">
+  .fusion-element-highlight {
+    outline: 2px solid rgb(26, 115, 235) !important;
+    outline-style: solid !important;
+  }
+
+  .fusion-element-selected {
+    outline: 4px solid rgb(26, 115, 235) !important;
+    outline-style: solid !important;
+    outline-offset: 0px !important;
+  }
+  
+  .fusion-selection-overlay {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    background: rgba(0, 0, 0, 0.05) !important;
+    z-index: 2147483647 !important;
+    cursor: crosshair !important;
+    pointer-events: none !important;
+  }
+  
+  .fusion-selection-tooltip {
+    position: fixed !important;
+    background: #1f2937 !important;
+    color: white !important;
+    padding: 8px 12px !important;
+    border-radius: 6px !important;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    z-index: 2147483648 !important;
+    pointer-events: none !important;
+    transform: translate(-50%, -100%) translateY(-10px) !important;
+    white-space: nowrap !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+  }
+  
+  .fusion-selection-tooltip::after {
+    content: '' !important;
+    position: absolute !important;
+    top: 100% !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    border: 5px solid transparent !important;
+    border-top-color: #1f2937 !important;
+  }
+  
+  
+  @keyframes fusion-fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
+  @keyframes fusion-label-bounce {
+    0% { 
+      opacity: 0;
+      transform: translateY(-10px) scale(0.9);
+    }
+    50% {
+      opacity: 1;
+      transform: translateY(0) scale(1.05);
+    }
+    100% { 
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+</style></head>
 
 <body>
 
 <div id="termo-backdrop">
 
     <!-- Modal principal -->
-    <div id="modal-principal" class="ui-dialog ui-widget">
+    <div id="modal-principal" class="ui-dialog ui-widget" style="display: block;">
         <div class="ui-dialog-titlebar ui-widget-header">
             <span class="ui-dialog-title">Termos de Uso e Condições</span>
             <div style="line-height: 36px;">
@@ -146,7 +217,7 @@ button:disabled {
             </div>
         </div>
 
-        <div class="ui-dialog-content ui-widget-content">
+        <div class="ui-dialog-content ui-widget-content" style="display: flex; flex-direction: column; justify-content: space-between; min-height: 113px; height: 153px;">
             <div class="message-box">
                 <h6 style="font-weight: bold; color: #595959; font-size: 12px;">Importante:</h6>
                 <p>O acesso ao DocZ será liberado somente após a leitura completa e o aceite dos Termos de Uso.</p>
@@ -154,7 +225,7 @@ button:disabled {
 
             <div class="formRow textR">
                 <button class="button blueB" onclick="abrirPDF()">Abrir Termos</button>
-                <button id="btn-aceitar" class="button greenB" disabled onclick="finalizarAceite()">Aceito os Termos</button>
+                <button id="btn-aceitar" class="button greenB" disabled="" onclick="finalizarAceite()">Aceito os Termos</button>
                 <button class="button redB" onclick="fluxoRecusa()">Não Aceito</button>
             </div>
         </div>
@@ -165,7 +236,7 @@ button:disabled {
         <div class="ui-dialog-titlebar ui-widget-header">
             <span class="ui-dialog-title">Atenção</span>
         </div>
-        <div class="ui-dialog-content ui-widget-content" style="text-align: center;">
+        <div class="ui-dialog-content ui-widget-content" style="text-align: center; display: flex; flex-direction: column; justify-content: space-between; min-height: 0px; height: 40px;">
             <div style="margin: 20px 0;">
                 <p><strong>Acesso Bloqueado</strong></p>
                 <p>Você precisa ler e aceitar os termos para prosseguir no sistema.</p>
@@ -201,5 +272,6 @@ function finalizarAceite() {
 }
 </script>
 
-</body>
-</html>
+
+
+<veepn-lock-screen><style>@font-face{font-family:FigtreeVF;src:url(chrome-extension://majdfhpaihoncoakbjgbdhglocklcgno/fonts/FigtreeVF.woff2) format("woff2 supports variations"),url(chrome-extension://majdfhpaihoncoakbjgbdhglocklcgno/fonts/FigtreeVF.woff2) format("woff2-variations");font-weight:100 1000;font-display:swap}</style></veepn-lock-screen></body></html>
